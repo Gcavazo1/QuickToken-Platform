@@ -1,0 +1,48 @@
+{
+  "folders": {
+    "contracts": {
+      "description": "Holds all smart contracts for the project.",
+      "required_files": ["QuickToken.sol"]
+    },
+    "scripts": {
+      "description": "Hardhat scripts for deployment and token interaction.",
+      "required_files": ["deploy.js"]
+    },
+    "test": {
+      "description": "All test files for smart contracts.",
+      "required_files": ["QuickToken.test.js"]
+    },
+    "docs": {
+      "description": "Project documentation, not required but suggested.",
+      "optional_files": ["README.md"]
+    },
+    "config": {
+      "description": "Holds Hardhat configuration and any environment files.",
+      "required_files": ["hardhat.config.js", ".env"]
+    }
+  },
+  "file_rules": {
+    "QuickToken.sol": {
+      "must_contain": ["mint", "burn", "time-lock", "owner-only functions"],
+      "must_use": ["OpenZeppelin Contracts", "Solidity ^0.8.20"]
+    },
+    "deploy.js": {
+      "must_use": ["ethers.js", "deployer signer", "constructor args"],
+      "must_log": ["Deployer address", "Deployed contract address"]
+    },
+    "QuickToken.test.js": {
+      "must_test": ["minting logic", "time lock", "burn", "mint fee"],
+      "framework": "Mocha + Chai"
+    }
+  },
+  "global_rules": {
+    "disallow_frameworks": ["Truffle", "Foundry", "Hardhat plugins not in use"],
+    "disallow_languages": ["Python", "Rust", "Java"],
+    "allow_only": ["Solidity", "JavaScript"],
+    "naming_conventions": {
+      "camelCase": ["functions"],
+      "PascalCase": ["contracts", "components"],
+      "kebab-case": ["folders"]
+    }
+  }
+}

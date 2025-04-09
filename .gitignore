@@ -1,0 +1,62 @@
+# Environment variables
+.env
+.env.*
+
+# Node dependencies
+node_modules/
+
+# Hardhat artifacts
+artifacts/
+cache/
+typechain/
+typechain-types/
+
+# Test results
+coverage/
+coverage.json
+
+# Build outputs
+dist/
+build/
+
+# IDE and editor files
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+
+# Debug logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Temporary files
+*.swp
+*.swo
+*~
+*.bak
+*.tmp
+
+# Gas reporter output
+gas-report.txt
+
+# Deployment info (might contain sensitive addresses)
+deployment-*.json
+deployments/
+
+# Optional - exclude package-lock to avoid merge conflicts when users install
+# package-lock.json
+
+# Optional - exclude yarn.lock to avoid merge conflicts when users install
+# yarn.lock

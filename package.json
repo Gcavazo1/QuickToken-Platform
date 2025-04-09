@@ -1,0 +1,26 @@
+{
+  "name": "quickstart-token-kit",
+  "version": "1.0.0",
+  "description": "A customizable ERC-20 token contract kit for creators and small DAOs.",
+  "main": "index.js",
+  "scripts": {
+    "test": "npx hardhat test",
+    "deploy": "npx hardhat run scripts/deploy.js --network localhost",
+    "deploy:goerli": "npx hardhat run scripts/deploy.js --network goerli",
+    "compile": "npx hardhat compile",
+    "node": "npx hardhat node"
+  },
+  "author": "Your Name",
+  "license": "MIT",
+  "dependencies": {
+    "@openzeppelin/contracts": "^4.7.3",
+    "dotenv": "^16.0.0",
+    "ethers": "^6.4.0"
+  },
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^5.0.0"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  }
+}
