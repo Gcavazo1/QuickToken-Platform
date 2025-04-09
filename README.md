@@ -2,7 +2,7 @@
 
 A professional-grade, customizable ERC-20 token smart contract toolkit designed for creators, small DAOs, and developers who want to launch their own token with passive income features.
 
-![QuickToken Kit Banner](https://i.imgur.com/7lJGdnt.png)
+![GigaCode QuickToken Kit](https://raw.githubusercontent.com/Gcavazo1/QuickToken-Kit/master/assets/GigaCode_Logo.png)
 
 ## 🌟 Key Features
 
@@ -21,10 +21,16 @@ A professional-grade, customizable ERC-20 token smart contract toolkit designed 
   - [Features](#-key-features)
   - [Prerequisites](#-prerequisites)
   - [Installation](#-installation)
+  - [Detailed Setup Guide](#-detailed-setup-guide)
   - [Configuration](#-configuration)
+  - [Token Customization](#-token-customization)
   - [Deployment](#-deployment)
+  - [Interacting With Your Token](#-interacting-with-your-token)
   - [Contract Functions](#-contract-functions)
   - [Monetization Strategy](#-monetization-strategy)
+  - [Advanced Features](#-advanced-features)
+  - [Example Use Cases](#-example-use-cases)
+  - [Testing Guide](#-testing-guide)
   - [Troubleshooting](#-troubleshooting)
   - [Customization Guide](#-customization-guide)
   - [License](#-license)
@@ -36,6 +42,7 @@ A professional-grade, customizable ERC-20 token smart contract toolkit designed 
 - Basic knowledge of smart contracts
 - Wallet with network tokens for deployment (ETH, MATIC, etc.)
 - Infura account (free tier is sufficient)
+- MetaMask or similar wallet for testing and deployment
 
 ## 🚀 Installation
 
@@ -62,6 +69,34 @@ npx hardhat compile
 npx hardhat test
 ```
 
+## 🔍 Detailed Setup Guide
+
+### Creating an Infura Account
+
+1. Visit [Infura.io](https://infura.io) and sign up for a free account
+2. Click "Create New Project"
+3. Select "Web3 API" as the product and name your project (e.g., "QuickToken")
+4. Once created, find your "Project ID" (this is your Infura API Key)
+5. Copy this ID to use in your `.env` file
+
+### Setting Up MetaMask
+
+1. Install the [MetaMask browser extension](https://metamask.io/download.html)
+2. Create a new wallet or import an existing one
+3. To get your private key (needed for deployment):
+   - Click on the account icon
+   - Go to "Account Details"
+   - Click "Export Private Key" (enter your password)
+   - Copy the private key (remove the "0x" prefix when adding to `.env`)
+
+### Getting Test Tokens
+
+For testing on testnets before deploying to mainnet:
+
+- **Ethereum Sepolia**: Visit [Sepolia Faucet](https://sepoliafaucet.com/)
+- **Polygon Mumbai**: Visit [Polygon Faucet](https://faucet.polygon.technology/)
+- **Base Goerli**: Visit [Base Faucet](https://www.coinbase.com/faucets/base-ethereum-goerli-faucet)
+
 ## ⚙️ Configuration
 
 1. Create a `.env` file in the project root with the following variables:
@@ -78,24 +113,108 @@ ETHERSCAN_API_KEY=your_etherscan_api_key_here
 POLYGONSCAN_API_KEY=your_polygonscan_api_key_here
 ```
 
-2. Customize your token parameters in `scripts/deploy.js`:
+2. Getting verification API keys (optional but recommended):
+   - For Etherscan: Create an account at [etherscan.io](https://etherscan.io), go to your profile and create an API key
+   - For Polygonscan: Create an account at [polygonscan.com](https://polygonscan.com), go to your profile and create an API key
 
-- `tokenName`: The name of your token (e.g., "MyAwesomeToken")
-- `tokenSymbol`: The symbol for your token (e.g., "MAT")
-- `maxSupply`: Maximum total supply of tokens
-- `mintFee`: Fee charged per token (in native currency)
-- `lockDuration`: Time period tokens cannot be transferred after deployment
+## 🎛️ Token Customization
 
-For example:
+You can fully customize your token by modifying the parameters in `scripts/deploy.js`:
+
+### Basic Parameters
+
 ```javascript
-const tokenName = "MyAwesomeToken";
-const tokenSymbol = "MAT";
-const maxSupply = ethers.parseUnits("10000000", 18); // 10 Million tokens
-const mintFee = ethers.parseEther("0.001"); // 0.001 ETH/MATIC/etc per token
-const lockDuration = 60 * 60 * 24 * 30; // 30 days lock duration
+// In scripts/deploy.js
+const tokenName = "MyAwesomeToken";       // Your token's name
+const tokenSymbol = "MAT";                // Your token's symbol (2-6 characters recommended)
+const maxSupply = ethers.parseUnits("10000000", 18); // Maximum total supply (with 18 decimals)
+const mintFee = ethers.parseEther("0.001"); // Fee to mint each token
+const lockDuration = 60 * 60 * 24 * 30;   // Time lock in seconds (30 days in this example)
+```
+
+### Understanding the Parameters
+
+| Parameter | Description | Recommended Values |
+|-----------|-------------|-------------------|
+| `tokenName` | Full name of your token | Make it memorable, descriptive |
+| `tokenSymbol` | Trading symbol | 2-6 characters, all caps |
+| `maxSupply` | Maximum tokens that can exist | Consider your tokenomics (1M-1B common) |
+| `mintFee` | Fee to mint 1 token | Varies by network (see [Monetization](#-monetization-strategy)) |
+| `lockDuration` | Period tokens are non-transferable | 0 (no lock) to several months (in seconds) |
+
+### Customization Examples
+
+**Community Token**:
+```javascript
+const tokenName = "Community Points";
+const tokenSymbol = "CPTS";
+const maxSupply = ethers.parseUnits("1000000", 18); // 1 Million
+const mintFee = ethers.parseEther("0.0001"); // Low fee for community adoption
+const lockDuration = 0; // No lock for immediate use
+```
+
+**Investment Token**:
+```javascript
+const tokenName = "Yield Generator";
+const tokenSymbol = "YIELD";
+const maxSupply = ethers.parseUnits("10000", 18); // Limited supply
+const mintFee = ethers.parseEther("0.01"); // Higher fee
+const lockDuration = 60 * 60 * 24 * 90; // 90-day lock
 ```
 
 ## 📡 Deployment
+
+### Step-by-Step Deployment Guide
+
+#### 1. Choose a Network for Deployment
+
+First, decide which network to deploy to based on your needs (see [Network Selection Guide](#network-selection-guide)).
+
+#### 2. Ensure Your Wallet Has Funds
+
+Make sure your wallet has enough native tokens for the network you're deploying to:
+- Ethereum: 0.05-0.1 ETH
+- Polygon: 1-2 MATIC
+- Other networks: Similar small amounts
+
+#### 3. Configure Your Token Parameters
+
+Update the parameters in `scripts/deploy.js` as shown in the [Token Customization](#-token-customization) section.
+
+#### 4. Deploy Your Token
+
+Run the deployment command for your chosen network:
+
+```bash
+# For Ethereum Mainnet
+npx hardhat run scripts/deploy.js --network mainnet
+
+# For Polygon (recommended for most users)
+npx hardhat run scripts/deploy.js --network polygon
+
+# For testnets (safer for first deployment)
+npx hardhat run scripts/deploy.js --network sepolia
+```
+
+#### 5. Save Your Contract Address
+
+When deployment succeeds, you'll see a message like:
+```
+QuickToken deployed to: 0x1234...5678
+```
+
+Save this address! You'll need it to interact with your token.
+
+#### 6. Verify Your Contract (Optional but Recommended)
+
+```bash
+npx hardhat verify --network polygon 0xYOUR_CONTRACT_ADDRESS "TokenName" "TKN" "TOTAL_SUPPLY" "MINT_FEE" "LOCK_DURATION"
+```
+
+Replace the values with your actual parameters. For example:
+```bash
+npx hardhat verify --network polygon 0x1234567890AbCdEf1234567890AbCdEf12345678 "MyAwesomeToken" "MAT" "10000000000000000000000000" "1000000000000000" "2592000" 
+```
 
 ### Network Selection Guide
 
@@ -107,44 +226,89 @@ const lockDuration = 60 * 60 * 24 * 30; // 30 days lock duration
 | Arbitrum | Fast, Ethereum security | Medium adoption | Technical applications |
 | Base | Coinbase backing, growing rapidly | Newer ecosystem | Consumer-focused applications |
 
-### Deployment Commands
+## 🔄 Interacting With Your Token
 
-Deploy to Ethereum Mainnet:
-```bash
-npx hardhat run scripts/deploy.js --network mainnet
-```
+### Using MetaMask (for Basic Interactions)
 
-Deploy to Polygon (recommended for most users):
-```bash
-npx hardhat run scripts/deploy.js --network polygon
-```
+1. **Add Your Token to MetaMask**:
+   - Open MetaMask
+   - Scroll down and click "Import tokens"
+   - Enter your token's contract address
+   - Symbol and Decimals (18) should auto-fill
+   - Click "Add Custom Token"
 
-Deploy to Optimism:
-```bash
-npx hardhat run scripts/deploy.js --network optimism
-```
+2. **Checking Your Balance**:
+   - Once added, your token balance will appear in MetaMask
 
-Deploy to Arbitrum:
-```bash
-npx hardhat run scripts/deploy.js --network arbitrum
-```
+3. **Transferring Tokens**:
+   - Click on your token
+   - Click "Send"
+   - Enter recipient address and amount
+   - Confirm the transaction
 
-Deploy to Base:
-```bash
-npx hardhat run scripts/deploy.js --network base
-```
+### Using Etherscan/Polygonscan (for Advanced Interactions)
 
-### Verify Your Contract (Optional but Recommended)
+1. **Search for Your Contract**:
+   - Go to the explorer for your network (e.g., [polygonscan.com](https://polygonscan.com))
+   - Enter your contract address in the search bar
 
-After deployment, verify your contract to make it transparent to users:
+2. **Interact With Contract Functions**:
+   - Go to the "Contract" tab
+   - Click "Write Contract" or "Read Contract"
+   - Connect your wallet when prompted
+   - Select the function you want to use (e.g., mint, burn)
+   - Enter the parameters and execute
 
-```bash
-npx hardhat verify --network NETWORK_NAME DEPLOYED_CONTRACT_ADDRESS "TokenName" "TKN" "TOTAL_SUPPLY" "MINT_FEE" "LOCK_DURATION"
-```
+### Example JavaScript for Programmatic Interaction
 
-Replace the placeholders with your actual values. For example:
-```bash
-npx hardhat verify --network polygon 0x1234567890AbCdEf1234567890AbCdEf12345678 "MyAwesomeToken" "MAT" "10000000000000000000000000" "1000000000000000" "2592000" 
+```javascript
+// Example script to interact with your token (Node.js)
+const { ethers } = require("ethers");
+require('dotenv').config();
+
+async function interactWithToken() {
+  // Connect to the network
+  const provider = new ethers.providers.JsonRpcProvider(
+    `https://polygon-mainnet.infura.io/v3/${process.env.INFURA_API_KEY}`
+  );
+  
+  // Create a signer
+  const signer = new ethers.Wallet(process.env.PRIVATE_KEY, provider);
+  
+  // The contract address and ABI
+  const tokenAddress = "YOUR_TOKEN_ADDRESS_HERE";
+  const tokenABI = [
+    "function balanceOf(address) view returns (uint256)",
+    "function transfer(address to, uint256 amount) returns (bool)",
+    "function mint(address to, uint256 amount) payable",
+    "function burn(uint256 amount)",
+  ];
+  
+  // Create a contract instance
+  const tokenContract = new ethers.Contract(tokenAddress, tokenABI, signer);
+  
+  // Get balance
+  const balance = await tokenContract.balanceOf(signer.address);
+  console.log(`Token balance: ${ethers.utils.formatUnits(balance, 18)}`);
+  
+  // Mint tokens (requires sending the mint fee)
+  const mintAmount = ethers.utils.parseUnits("1", 18); // 1 token
+  const mintFee = await tokenContract.calculateMintFee(mintAmount);
+  await tokenContract.mint(signer.address, mintAmount, { value: mintFee });
+  
+  // Transfer tokens
+  const recipient = "RECIPIENT_ADDRESS";
+  const transferAmount = ethers.utils.parseUnits("0.5", 18); // 0.5 tokens
+  await tokenContract.transfer(recipient, transferAmount);
+  
+  // Burn tokens
+  const burnAmount = ethers.utils.parseUnits("0.1", 18); // 0.1 tokens
+  await tokenContract.burn(burnAmount);
+}
+
+interactWithToken()
+  .then(() => console.log("Done!"))
+  .catch(error => console.error(error));
 ```
 
 ## 📝 Contract Functions
@@ -192,6 +356,237 @@ Mint some tokens for yourself during deployment and sell them:
 - Add utility to your token to increase demand
 - Create DeFi products around your token
 - Build a community to drive adoption
+
+## 🧩 Advanced Features
+
+The QuickToken Kit can be easily enhanced with these premium features:
+
+### Owner-Only Minting (For Controlled Supply)
+
+Add this to your contract to restrict minting to the owner:
+
+```solidity
+// Add to QuickToken.sol
+bool public ownerOnlyMinting = true;
+
+function toggleOwnerOnlyMinting() external onlyOwner {
+    ownerOnlyMinting = !ownerOnlyMinting;
+}
+
+// Modify the mint function
+function mint(address to, uint256 amount) public payable nonReentrant {
+    if (ownerOnlyMinting) {
+        require(msg.sender == owner(), "QuickToken: Only owner can mint");
+    }
+    // Rest of the function stays the same
+    // ...
+}
+```
+
+### Minting Limits (For Controlled Growth)
+
+```solidity
+// Add to QuickToken.sol
+uint256 public mintLimit = 1000 * 10**18; // Default: 1000 tokens
+mapping(address => uint256) public mintedByAddress;
+
+function setMintLimit(uint256 newLimit) external onlyOwner {
+    mintLimit = newLimit;
+}
+
+// Modify the mint function
+function mint(address to, uint256 amount) public payable nonReentrant {
+    require(mintedByAddress[msg.sender] + amount <= mintLimit, "QuickToken: Exceeds mint limit");
+    mintedByAddress[msg.sender] += amount;
+    // Rest of the function stays the same
+    // ...
+}
+```
+
+### Upgradeable Contracts
+
+For full upgradeability, transform the contract using OpenZeppelin's Upgradeable Contracts pattern:
+
+```solidity
+// Import upgradeable versions
+import "@openzeppelin/contracts-upgradeable/token/ERC20/ERC20Upgradeable.sol";
+import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
+import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
+
+contract QuickTokenUpgradeable is Initializable, ERC20Upgradeable, OwnableUpgradeable {
+    function initialize(
+        string memory name_,
+        string memory symbol_,
+        uint256 maxSupply_,
+        uint256 mintFee_,
+        uint256 lockDuration
+    ) public initializer {
+        __ERC20_init(name_, symbol_);
+        __Ownable_init();
+        // Rest of initialization
+    }
+    // Rest of contract functions
+}
+```
+
+## 🧪 Example Use Cases
+
+### Community Token
+
+Create a token for your online community where members earn tokens for participation:
+
+```javascript
+// Deploy with these parameters
+const tokenName = "Community Points";
+const tokenSymbol = "CPTS";
+const maxSupply = ethers.parseUnits("10000000", 18); // 10 Million tokens
+const mintFee = ethers.parseEther("0.0001"); // Very small fee (accessible)
+const lockDuration = 0; // No lock for immediate use
+```
+
+**Use Cases:**
+- Reward active community members by airdropping tokens
+- Create a community marketplace where goods/services are priced in your token
+- Use token ownership to gate access to premium content
+
+### Creator Economy Token
+
+For content creators looking to monetize their audience:
+
+```javascript
+// Deploy with these parameters
+const tokenName = "Creator Coin";
+const tokenSymbol = "CRCN";
+const maxSupply = ethers.parseUnits("1000000", 18); // 1 Million tokens (scarcity)
+const mintFee = ethers.parseEther("0.005"); // Medium fee (revenue per supporter)
+const lockDuration = 60 * 60 * 24 * 14; // 14-day lock (prevent initial dumping)
+```
+
+**Use Cases:**
+- Sell tokens as "creator shares" where holders get exclusive benefits
+- Allow fans to support you by minting tokens
+- Create token-gated Discord channels or content
+
+### Investment/DAO Token
+
+For investment pools or DAOs:
+
+```javascript
+// Deploy with these parameters
+const tokenName = "DAO Governance Token";
+const tokenSymbol = "DAOG";
+const maxSupply = ethers.parseUnits("100000", 18); // 100K tokens (high value per token)
+const mintFee = ethers.parseEther("0.01"); // Higher fee (exclusive)
+const lockDuration = 60 * 60 * 24 * 30; // 30-day lock (stability)
+```
+
+**Use Cases:**
+- Use token ownership for DAO voting power
+- Distribute funds in proportion to token ownership
+- Create a treasury funded by mint fees
+
+## 🧪 Testing Guide
+
+Before deploying to mainnet, you should thoroughly test your token:
+
+### 1. Local Testing
+
+Run the built-in tests:
+```bash
+npx hardhat test
+```
+
+### 2. Testnet Deployment
+
+Deploy to a testnet first:
+```bash
+npx hardhat run scripts/deploy.js --network sepolia
+```
+
+### 3. Basic Verification Script
+
+After deployment, run this script to verify basic functionality:
+
+```javascript
+// Save as scripts/verify-token.js
+const hre = require("hardhat");
+const ethers = hre.ethers;
+
+async function main() {
+  // Get contract address from command line or hardcode it
+  const contractAddress = process.argv[2] || "YOUR_DEPLOYED_CONTRACT_ADDRESS";
+  
+  console.log("Verifying token functionality at:", contractAddress);
+  
+  // Get signers
+  const [owner, addr1] = await ethers.getSigners();
+  
+  // Connect to the deployed contract
+  const QuickToken = await ethers.getContractFactory("QuickToken");
+  const token = await QuickToken.attach(contractAddress);
+  
+  // Check basic information
+  console.log("\n--- Basic Information ---");
+  console.log("Name:", await token.name());
+  console.log("Symbol:", await token.symbol());
+  console.log("Max Supply:", ethers.formatUnits(await token.maxSupply(), 18));
+  console.log("Mint Fee:", ethers.formatEther(await token.mintFee()), "ETH");
+  
+  const unlockTime = await token.unlockTime();
+  const now = Math.floor(Date.now() / 1000);
+  console.log("Time until unlock:", (unlockTime > now) ? 
+    `${(unlockTime - now) / (60*60*24)} days` : "Already unlocked");
+  
+  // Test minting
+  console.log("\n--- Testing Minting ---");
+  const mintAmount = ethers.parseUnits("1", 18); // 1 token
+  const mintFee = await token.calculateMintFee(mintAmount);
+  console.log("Minting 1 token with fee:", ethers.formatEther(mintFee), "ETH");
+  
+  try {
+    const tx = await token.mint(owner.address, mintAmount, { value: mintFee });
+    await tx.wait();
+    console.log("✅ Minting successful!");
+  } catch (error) {
+    console.error("❌ Minting failed:", error.message);
+  }
+  
+  // Check balance
+  console.log("\n--- Checking Balance ---");
+  const balance = await token.balanceOf(owner.address);
+  console.log("Owner balance:", ethers.formatUnits(balance, 18), "tokens");
+  
+  // Test transfer if not locked
+  if (unlockTime <= now) {
+    console.log("\n--- Testing Transfer ---");
+    try {
+      const tx = await token.transfer(addr1.address, ethers.parseUnits("0.1", 18));
+      await tx.wait();
+      console.log("✅ Transfer successful!");
+      console.log("Recipient balance:", 
+        ethers.formatUnits(await token.balanceOf(addr1.address), 18), "tokens");
+    } catch (error) {
+      console.error("❌ Transfer failed:", error.message);
+    }
+  } else {
+    console.log("\n--- Skipping Transfer Test (tokens are locked) ---");
+  }
+  
+  console.log("\n✅ Verification complete!");
+}
+
+main()
+  .then(() => process.exit(0))
+  .catch((error) => {
+    console.error(error);
+    process.exit(1);
+  });
+```
+
+Run with:
+```bash
+npx hardhat run scripts/verify-token.js --network sepolia YOUR_CONTRACT_ADDRESS
+```
 
 ## ❓ Troubleshooting
 
@@ -285,10 +680,32 @@ zkSync: {
 
 ## 📄 License
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+This project is licensed under a proprietary license. Purchase of the QuickToken Kit grants you specific rights as outlined below:
+
+### What You CAN Do:
+- Use the software to create and deploy your own token smart contracts
+- Modify the code for your own personal or commercial projects
+- Deploy tokens created with this software on any compatible blockchain network
+
+### What You CANNOT Do:
+- Redistribute, resell, or sublicense the QuickToken Kit
+- Remove proprietary notices or labels
+- Create competing products for sale
+- Claim that you created the original QuickToken Kit
+
+For the complete license terms, please see the [LICENSE](./LICENSE) file included with this software.
+
+### Commercial Options
+
+We offer several licensing options to fit different needs:
+- **Standard License**: For individual projects
+- **Developer License**: For multiple projects (up to 5)
+- **Enterprise License**: For unlimited projects and organizations
+
+For pricing and detailed commercial terms, please see [COMMERCIAL_TERMS.md](./COMMERCIAL_TERMS.md).
 
 ---
 
-Created with ❤️ by [Your Name/Company]
+Created with ❤️ by [GigaCode](https://github.com/Gcavazo1) | Gabriel Cavazos
 
-For support or inquiries, contact: [your email/contact info] 
+For support, inquiries, or additional licensing options, contact: contact@gigacode.dev 

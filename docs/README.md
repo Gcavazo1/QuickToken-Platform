@@ -1,127 +1,195 @@
-# QuickStart Token Kit
+# QuickToken Kit
 
-A production-ready, customizable ERC-20 token contract for creators, small DAOs, and developers who want to deploy a custom token with optional passive-income features.
+A complete ERC-20 token creation toolkit with advanced features for launching custom tokens on Ethereum and compatible networks.
 
-## Features
+## ⭐ Features
 
-- **Customizable Parameters**: Set your token's name, symbol, max supply, and more
-- **Optional Mint Fee**: Generate passive income by setting a fee for minting tokens
-- **Time Lock**: Prevent token transfers until a specified time after deployment
-- **Burn Support**: Allow reducing token supply through burning
-- **Gas Efficient**: Built on top of OpenZeppelin's battle-tested contracts
-- **Fully Tested**: Comprehensive test suite with 100% coverage
+- **ERC-20 Compliant**: Built on OpenZeppelin's battle-tested contract library
+- **Advanced Token Economics**:
+  - Configurable mint fee to create revenue from token creation
+  - Maximum supply cap to control token inflation
+  - Time-locked transfers for launch stability
+  - Built-in burn functionality to reduce supply over time
+- **Multi-Network Support**: Deploy to Ethereum, Optimism, Polygon, Arbitrum, and Base
+- **Owner Controls**: Owner-only functions for administrative control
+- **Comprehensive Testing**: Full test suite with Mocha and Chai
+- **Detailed Verification**: Scripts to validate functionality post-deployment
 
-## Getting Started
+## 📋 Prerequisites
 
-### Prerequisites
+- [Node.js](https://nodejs.org/) (v16+)
+- [npm](https://www.npmjs.com/) (v8+)
+- [Metamask](https://metamask.io/) wallet with testnet/mainnet funds
+- [Infura](https://infura.io/) or [Alchemy](https://www.alchemy.com/) API key
 
-- Node.js v16 or later
-- NPM or Yarn
-- Git
+## 🔧 Setup
 
-### Installation
+1. Clone the repository and install dependencies:
 
-1. Clone this repository
-```
-git clone https://github.com/yourusername/quickstart-token-kit.git
+```bash
+git clone <repository-url>
 cd quickstart-token-kit
-```
-
-2. Install dependencies
-```
 npm install
 ```
 
-3. Compile the contracts
+2. Create a `.env` file in the root directory with your configuration:
+
 ```
-npx hardhat compile
+PRIVATE_KEY=your_wallet_private_key
+INFURA_API_KEY=your_infura_api_key
+ETHERSCAN_API_KEY=your_etherscan_api_key
+POLYGONSCAN_API_KEY=your_polygonscan_api_key
 ```
 
-4. Run tests
+⚠️ **SECURITY WARNING**: Never commit your `.env` file to version control!
+
+## 📝 Token Configuration
+
+Before deployment, customize your token parameters in the `scripts/deploy.js` file:
+
+```javascript
+// Token parameters
+const NAME = "QuickToken";          // Your token name
+const SYMBOL = "QTK";               // Your token symbol (3-4 characters recommended)
+const MAX_SUPPLY = "1000000";       // Maximum token supply (in whole tokens)
+const MINT_FEE = "0.01";            // Fee per token (in ETH)
+const LOCK_DURATION = 86400 * 7;    // Time lock in seconds (7 days)
 ```
+
+## 🚀 Deployment
+
+### Deploy to a Test Network (Recommended First Steps)
+
+```bash
+# Deploy to Sepolia testnet
+npx hardhat run scripts/deploy.js --network sepolia
+```
+
+### Deploy to Mainnet Networks
+
+```bash
+# Ethereum Mainnet
+npx hardhat run scripts/deploy.js --network mainnet
+
+# Polygon
+npx hardhat run scripts/deploy.js --network polygon
+
+# Optimism
+npx hardhat run scripts/deploy.js --network optimism
+
+# Arbitrum
+npx hardhat run scripts/deploy.js --network arbitrum
+
+# Base
+npx hardhat run scripts/deploy.js --network base
+```
+
+After deployment, the script will output your contract address. **Save this address for verification and interaction!**
+
+## ✅ Verify Deployment
+
+1. Verify your contract on the blockchain explorer:
+
+```bash
+# Replace with your contract address and constructor arguments
+npx hardhat verify --network sepolia YOUR_CONTRACT_ADDRESS "QuickToken" "QTK" "1000000000000000000000000" "10000000000000000" "604800"
+```
+
+2. Run the verification script to check token functionality:
+
+```bash
+# Replace with your contract address
+npx hardhat run scripts/verify-token.js --network sepolia YOUR_CONTRACT_ADDRESS
+```
+
+## 🧪 Testing
+
+Run the test suite to verify contract functionality:
+
+```bash
 npx hardhat test
 ```
 
-## Deployment
+The test suite validates:
+- Basic token properties
+- Minting functionality and fee collection
+- Time-lock transfer restrictions
+- Burn functionality
+- Owner permissions
 
-### Local Testing Network
+## 💼 Commercial Use
 
-To deploy the contract on a local Hardhat network:
+For commercial applications, consider these customizations:
 
-1. Start a local Hardhat node
+1. **Token Distribution**: Create additional scripts for token airdrops or sales events
+2. **Admin Controls**: Add more admin functions like pausing or upgradeability
+3. **Revenue Strategy**: Adjust mint fees based on market research and tokenomics
+4. **Lock Tiers**: Implement tiered time-lock system for different user categories
+
+## 📱 Frontend Integration
+
+For wallet integration in web applications:
+
+1. Use [ethers.js](https://docs.ethers.io/) to connect to user wallets
+2. Follow this pattern for interacting with your token:
+
+```javascript
+// Example frontend code for connecting to the token contract
+const { ethers } = require("ethers");
+const tokenABI = require("../artifacts/contracts/QuickToken.sol/QuickToken.json").abi;
+
+async function connectToToken(contractAddress) {
+  // Connect to the user's wallet
+  const provider = new ethers.providers.Web3Provider(window.ethereum);
+  await provider.send("eth_requestAccounts", []);
+  const signer = provider.getSigner();
+  
+  // Connect to the contract
+  const tokenContract = new ethers.Contract(contractAddress, tokenABI, signer);
+  
+  // Now you can call functions like:
+  const tokenName = await tokenContract.name();
+  const userBalance = await tokenContract.balanceOf(await signer.getAddress());
+  
+  return tokenContract;
+}
 ```
-npx hardhat node
-```
 
-2. Deploy the contract to the local network in a separate terminal
-```
-npx hardhat run scripts/deploy.js --network localhost
-```
+## 🔄 Advanced Interaction
 
-### Public Testnet or Mainnet
+The QuickToken contract exposes these primary functions:
 
-1. Create a `.env` file in the project root with your configuration:
-```
-PRIVATE_KEY=your_private_key_here
-GOERLI_RPC_URL=your_goerli_rpc_url
-MAINNET_RPC_URL=your_mainnet_rpc_url
-```
+### For Users
+- `balanceOf(address)`: Check token balance
+- `transfer(address, amount)`: Transfer tokens (subject to time-lock)
+- `burn(amount)`: Burn tokens to reduce supply
 
-2. Deploy to a public network (Goerli testnet example):
-```
-npx hardhat run scripts/deploy.js --network goerli
-```
+### For Owners
+- `mint(address, amount)`: Create new tokens up to max supply (requires fee)
+- `withdrawFees()`: Withdraw collected mint fees to owner address
 
-## Token Configuration
+## 🛠️ Troubleshooting
 
-When deploying, you can customize your token by modifying the parameters in `scripts/deploy.js`:
+Common issues and solutions:
 
-- `tokenName`: The name of your token (e.g., "MyAwesomeToken")
-- `tokenSymbol`: The symbol for your token (e.g., "MAT")
-- `maxSupply`: Maximum total supply of tokens (in ether units, default 1,000,000)
-- `mintFee`: Fee charged per token when minted (in ether, default 0.01 ETH)
-- `lockDuration`: Duration in seconds during which tokens cannot be transferred after deployment (default 7 days)
+- **Transaction Reverted**: Check time-lock status, balance, or gas fees
+- **Verification Failed**: Ensure constructor arguments match exactly what was deployed
+- **Contract Not Found**: Confirm you're connected to the right network
+- **Insufficient Funds Error**: Check wallet balance for ETH to cover gas + mint fees
 
-## Contract Functions
+## 📞 Support
 
-### For Token Holders
+For questions or customization requests:
 
-- `mint(address to, uint256 amount)`: Mint new tokens by paying the required fee
-- `burn(uint256 amount)`: Burn your own tokens
-- `burnFrom(address account, uint256 amount)`: Burn tokens from an account that has approved you
-- `transfer(address to, uint256 amount)`: Transfer tokens to another address (if not time-locked)
-- `approve(address spender, uint256 amount)`: Approve another address to spend your tokens
+- Open an issue on GitHub: [https://github.com/Gcavazo1/QuickToken-Kit/issues](https://github.com/Gcavazo1/QuickToken-Kit/issues)
+- Contact the development team at [contact@gigacode.dev](mailto:contact@gigacode.dev)
 
-### For Token Owners
+## 📜 License
 
-- `owner()`: View the contract owner address
-- `transferOwnership(address newOwner)`: Transfer ownership to a new address
+This project is licensed under a proprietary license. Purchase of the QuickToken Kit grants you specific usage rights while restricting redistribution and resale.
 
-### View Functions
+For full license terms, please see the LICENSE file included with this software.
 
-- `getTimeUntilUnlock()`: Get the remaining time until transfers are unlocked
-- `maxSupply()`: Get the maximum possible supply
-- `mintFee()`: Get the fee required to mint one token
-- `unlockTime()`: Get the timestamp when transfers will be unlocked
+---
 
-## Monetization Ideas
-
-The QuickToken contract includes a built-in mint fee that allows you to generate passive income:
-
-1. **Community Token**: Deploy the token for your community and set a reasonable mint fee
-2. **Creator Economy**: Use the token for your content ecosystem and earn on every mint
-3. **DAO Funding**: Fund your DAO treasury through initial token minting fees
-4. **Membership Tokens**: Deploy tokens that represent membership in your organization
-
-## Future Extensions
-
-Potential future extensions to consider:
-
-- Airdrop feature for the owner
-- Loyalty bonus for large token purchases
-- CLI minting tool
-- Web dashboard for token management
-
-## License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
+Happy token launching! 🚀

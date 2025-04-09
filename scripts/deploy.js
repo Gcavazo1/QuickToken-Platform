@@ -1,3 +1,7 @@
+// QuickToken Kit - Proprietary License
+// Copyright (c) 2023 GigaCode (Gabriel Cavazos). All rights reserved.
+// This code is licensed under a proprietary license. See LICENSE file for details.
+
 const hre = require("hardhat");
 const ethers = hre.ethers;
 
