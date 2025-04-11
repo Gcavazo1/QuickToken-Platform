@@ -3,7 +3,7 @@ import React, { ReactNode } from 'react';
 interface AnimatedGlowProps {
   children?: ReactNode;
   className?: string;
-  color?: 'magenta' | 'cyan' | 'teal' | 'green';
+  color?: 'magenta' | 'cyan' | 'teal' | 'green' | 'orange' | 'gold' | 'maroon';
   intensity?: 'high' | 'medium' | 'low';
   opacity?: number;
 }
@@ -29,6 +29,15 @@ export default function AnimatedGlow({
       break;
     case 'green':
       selectedColor = 'rgba(34, 197, 94, 1)'; // green-500
+      break;
+    case 'orange':
+      selectedColor = 'rgba(249, 115, 22, 1)'; // orange-500
+      break;
+    case 'gold':
+      selectedColor = 'rgba(245, 158, 11, 1)'; // amber-500
+      break;
+    case 'maroon':
+      selectedColor = 'rgba(190, 18, 60, 1)'; // rose-700
       break;
     default:
       selectedColor = 'rgba(56, 178, 172, 1)'; // teal-400

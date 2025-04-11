@@ -18,9 +18,9 @@ function IconWrapper({ icon: Icon, color }: { icon: IconType; color: GlowColor }
   const getGradient = () => {
     switch(color) {
       case 'teal': return 'from-teal-500 to-teal-700';
-      case 'cyan': return 'from-cyan-500 to-cyan-700';
-      case 'magenta': return 'from-pink-500 to-pink-700';
-      case 'green': return 'from-green-500 to-green-700';
+      case 'orange': return 'from-orange-500 to-orange-700';
+      case 'gold': return 'from-amber-400 to-amber-600';
+      case 'maroon': return 'from-rose-600 to-rose-800';
       default: return 'from-teal-500 to-teal-700';
     }
   };
@@ -31,15 +31,15 @@ function IconWrapper({ icon: Icon, color }: { icon: IconType; color: GlowColor }
         style={{ 
           boxShadow: `0 0 15px var(--feature-color)`,
           '--feature-color': color === 'teal' ? '#45B5C4' : 
-                            color === 'cyan' ? '#22D3EE' : 
-                            color === 'magenta' ? '#EC4899' : '#22C55E'
+                            color === 'orange' ? '#F26430' : 
+                            color === 'gold' ? '#F9B900' : '#7D1D3F'
         } as React.CSSProperties}></div>
       <Icon className="h-8 w-8 text-white relative z-10" aria-hidden="true" />
     </div>
   );
 }
 
-type GlowColor = 'magenta' | 'cyan' | 'teal' | 'green';
+type GlowColor = 'teal' | 'orange' | 'gold' | 'maroon' | 'magenta' | 'cyan' | 'green';
 
 interface FeatureCardProps {
   title: string;
@@ -55,9 +55,9 @@ function FeatureCard({ title, description, icon, glowColor, index }: FeatureCard
   const getTitleColor = () => {
     switch(glowColor) {
       case 'teal': return 'text-teal';
-      case 'cyan': return 'text-cyan';
-      case 'magenta': return 'text-pink';
-      case 'green': return 'text-green';
+      case 'orange': return 'text-orange';
+      case 'gold': return 'text-gold';
+      case 'maroon': return 'text-maroon';
       default: return 'text-teal';
     }
   };
@@ -116,19 +116,19 @@ export default function Features() {
       title: "Configurable Supply",
       description: "Set your token's total supply and distribution parameters to match your specific needs.",
       icon: CubeIcon,
-      glowColor: 'cyan'
+      glowColor: 'orange'
     },
     {
       title: "Time-Locked Transfers",
       description: "Protect your token with configurable time-locks that prevent transfers until a specified date.",
       icon: LockClosedIcon,
-      glowColor: 'magenta'
+      glowColor: 'gold'
     },
     {
       title: "Mint Fee Options",
       description: "Configure optional mint fees to generate revenue each time new tokens are created.",
       icon: CurrencyDollarIcon,
-      glowColor: 'green'
+      glowColor: 'maroon'
     },
     {
       title: "Owner Controls",
@@ -140,7 +140,7 @@ export default function Features() {
       title: "Security Audited",
       description: "Built on OpenZeppelin's battle-tested contracts for maximum security and stability.",
       icon: ShieldCheckIcon,
-      glowColor: 'cyan'
+      glowColor: 'gold'
     }
   ];
 

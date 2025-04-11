@@ -7,7 +7,7 @@ interface AdminDashboardCardProps {
   description: string;
   icon: React.ReactNode;
   link: string;
-  color?: 'magenta' | 'cyan' | 'teal' | 'green';
+  color?: 'teal' | 'orange' | 'gold' | 'maroon';
 }
 
 export default function AdminDashboardCard({

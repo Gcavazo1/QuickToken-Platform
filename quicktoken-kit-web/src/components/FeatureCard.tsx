@@ -5,10 +5,10 @@ interface FeatureCardProps {
   title: string;
   description: string;
   icon: ReactNode;
-  color?: 'magenta' | 'cyan' | 'teal' | 'green';
+  color?: 'magenta' | 'cyan' | 'teal' | 'green' | 'orange' | 'gold' | 'maroon';
 }
 
-export default function FeatureCard({ title, description, icon, color = 'teal' }: FeatureCardProps) {
+export default function FeatureCard({ title, description, icon, color = 'orange' }: FeatureCardProps) {
   return (
     <div className="card card-glow transition-all duration-300 hover:-translate-y-1">
       <AnimatedGlow color={color} intensity="low" className="w-14 h-14 flex items-center justify-center mb-6 rounded-lg">
