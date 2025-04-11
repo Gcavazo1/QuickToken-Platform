@@ -1,16 +1,14 @@
 import { NextPage } from 'next';
 import Head from 'next/head';
 import { useState, useEffect } from 'react';
-import { useAccount, useDisconnect, useConfig, createConfig } from 'wagmi';
+import { useAccount } from 'wagmi';
 import { useRouter } from 'next/router';
 import { LockClosedIcon, ArrowRightIcon } from '@heroicons/react/24/outline';
 import Image from 'next/image';
 import Link from 'next/link';
 
 const ConnectWallet: NextPage = () => {
-  const config = useConfig();
   const { isConnected } = useAccount();
-  const { disconnectAsync: disconnect } = useDisconnect();
   const router = useRouter();
   const [isRedirecting, setIsRedirecting] = useState(false);
   const { returnUrl } = router.query;
@@ -27,6 +25,11 @@ const ConnectWallet: NextPage = () => {
   const handleConnect = () => {
     // We'll redirect to the dapp page which has the wallet connection UI
     router.push('/dapp');
+  };
+
+  const handleDisconnect = () => {
+    // Redirect to the dapp page where the disconnect functionality is available
+    router.push('/dapp?action=disconnect');
   };
 
   return (
@@ -60,7 +63,7 @@ const ConnectWallet: NextPage = () => {
                 </p>
                 <div className="mt-4 flex justify-center">
                   <button
-                    onClick={() => disconnect()}
+                    onClick={handleDisconnect}
                     className="inline-flex items-center px-4 py-2 border border-gray-300 dark:border-gray-600 shadow-sm text-sm font-medium rounded-md text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-none"
                   >
                     Disconnect
