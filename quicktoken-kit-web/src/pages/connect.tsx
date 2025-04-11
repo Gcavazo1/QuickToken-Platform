@@ -6,8 +6,10 @@ import { useRouter } from 'next/router';
 import { LockClosedIcon, ArrowRightIcon } from '@heroicons/react/24/outline';
 import Image from 'next/image';
 import Link from 'next/link';
+import dynamic from 'next/dynamic';
 
-const ConnectWallet: NextPage = () => {
+// Create a client-only component to avoid SSR issues with wagmi
+const ConnectWalletContent: NextPage = () => {
   const { isConnected } = useAccount();
   const router = useRouter();
   const [isRedirecting, setIsRedirecting] = useState(false);
@@ -103,5 +105,10 @@ const ConnectWallet: NextPage = () => {
     </>
   );
 };
+
+// Use dynamic import with ssr: false to prevent server-side rendering
+const ConnectWallet = dynamic(() => Promise.resolve(ConnectWalletContent), { 
+  ssr: false 
+});
 
 export default ConnectWallet; 
