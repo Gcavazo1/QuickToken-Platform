@@ -1,16 +1,16 @@
 import { NextPage } from 'next';
 import Head from 'next/head';
 import { useState, useEffect } from 'react';
-import { useAccount, useConnect, useDisconnect } from 'wagmi';
+import { useAccount, useDisconnect, useConfig, createConfig } from 'wagmi';
 import { useRouter } from 'next/router';
 import { LockClosedIcon, ArrowRightIcon } from '@heroicons/react/24/outline';
 import Image from 'next/image';
 import Link from 'next/link';
 
 const ConnectWallet: NextPage = () => {
-  const { connect, connectors, error, isLoading, pendingConnector } = useConnect();
+  const config = useConfig();
   const { isConnected } = useAccount();
-  const { disconnect } = useDisconnect();
+  const { disconnectAsync: disconnect } = useDisconnect();
   const router = useRouter();
   const [isRedirecting, setIsRedirecting] = useState(false);
   const { returnUrl } = router.query;
@@ -23,6 +23,11 @@ const ConnectWallet: NextPage = () => {
       router.push(redirectPath);
     }
   }, [isConnected, router, returnUrl, isRedirecting]);
+
+  const handleConnect = () => {
+    // We'll redirect to the dapp page which has the wallet connection UI
+    router.push('/dapp');
+  };
 
   return (
     <>
@@ -69,51 +74,15 @@ const ConnectWallet: NextPage = () => {
                     Choose how to connect:
                   </p>
                   <div className="space-y-3">
-                    {connectors.map((connector) => (
-                      <button
-                        disabled={!connector.ready}
-                        key={connector.id}
-                        onClick={() => connect({ connector })}
-                        className={`w-full flex items-center justify-between px-4 py-3 border ${
-                          isLoading && pendingConnector?.id === connector.id
-                            ? 'border-blue-600 dark:border-blue-400'
-                            : 'border-gray-300 dark:border-gray-600'
-                        } rounded-md shadow-sm text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-none`}
-                      >
-                        <span>{connector.name}</span>
-                        {isLoading && pendingConnector?.id === connector.id ? (
-                          <div className="animate-spin h-5 w-5 text-blue-600 dark:text-blue-400">
-                            <svg className="h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                              <path
-                                className="opacity-75"
-                                fill="currentColor"
-                                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                              ></path>
-                            </svg>
-                          </div>
-                        ) : (
-                          <ArrowRightIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
-                        )}
-                      </button>
-                    ))}
+                    <button
+                      onClick={handleConnect}
+                      className="w-full flex items-center justify-between px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-none"
+                    >
+                      <span>Connect Wallet</span>
+                      <ArrowRightIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
+                    </button>
                   </div>
                 </div>
-
-                {error && (
-                  <div className="rounded-md bg-red-50 dark:bg-red-900 p-4">
-                    <div className="flex">
-                      <div className="ml-3">
-                        <h3 className="text-sm font-medium text-red-800 dark:text-red-200">
-                          Error connecting wallet
-                        </h3>
-                        <div className="mt-2 text-sm text-red-700 dark:text-red-300">
-                          <p>{error.message || 'Failed to connect'}</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                )}
                 
                 <div className="text-center">
                   <Link 
