@@ -13,7 +13,9 @@
   "author": "Your Name",
   "license": "MIT",
   "dependencies": {
+    "@heroicons/react": "^2.2.0",
     "@openzeppelin/contracts": "^4.7.3",
+    "@supabase/supabase-js": "^2.49.4",
     "dotenv": "^16.0.0",
     "ethers": "^6.4.0"
   },

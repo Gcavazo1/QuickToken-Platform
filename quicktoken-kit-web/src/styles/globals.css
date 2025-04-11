@@ -1,0 +1,526 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import './animations.css';
+
+/* Custom Font Declarations */
+@font-face {
+  font-family: 'FlynnHollow';
+  src: url('/fonts/FlynnHollow-0r5d.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Atiba';
+  src: url('/fonts/Atiba.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@layer base {
+  :root {
+    --primary-bg: #f8f9fa;
+    --secondary-bg: #ffffff;
+    --highlight-primary: #3b82f6;
+    --highlight-secondary: #2563eb;
+    --text-primary: #111827;
+    --text-secondary: #4b5563;
+    --sidebar-bg: rgba(249, 250, 251, 0.95);
+    --card-bg: #ffffff;
+    --border-color: #e5e7eb;
+    --card-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    --btn-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    --transition-speed: 0.2s;
+  }
+  
+  .dark {
+    --primary-bg: #0A0A0A;
+    --secondary-bg: #15151e;
+    --highlight-primary: #ff1f70;
+    --highlight-secondary: #00c2ff;
+    --text-primary: #ffffff;
+    --text-secondary: #bbbbbb;
+    --sidebar-bg: rgba(10, 10, 18, 0.95);
+    --card-bg: #1e1e2f;
+    --border-color: #374151;
+    --card-shadow: 0 4px 6px rgba(0, 194, 255, 0.15);
+    --btn-shadow: 0 4px 6px rgba(255, 31, 112, 0.2);
+    --transition-speed: 0.3s;
+  }
+
+  html {
+    @apply bg-primary text-white;
+    font-family: 'Atiba', system-ui, -apple-system, sans-serif;
+  }
+
+  body {
+    @apply min-h-screen antialiased;
+    background: linear-gradient(to bottom, var(--primary-bg) 0%, var(--secondary-bg) 100%);
+    scroll-behavior: smooth;
+    font-family: 'Atiba', monospace;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-bold;
+    font-family: 'FlynnHollow', sans-serif;
+    letter-spacing: 0.02em;
+  }
+
+  h1 {
+    @apply text-4xl md:text-5xl lg:text-6xl;
+  }
+
+  h2 {
+    @apply text-3xl md:text-4xl;
+  }
+
+  h3 {
+    @apply text-2xl md:text-3xl;
+  }
+
+  a {
+    @apply text-teal hover:text-gold transition-colors duration-200;
+  }
+  
+  p, span, div, button, input, textarea, select {
+    font-family: 'Atiba', monospace;
+  }
+}
+
+@layer components {
+  .container {
+    @apply px-4 mx-auto max-w-7xl;
+  }
+
+  .btn {
+    @apply px-6 py-3 rounded-md font-semibold transition-all duration-200;
+    font-family: 'Atiba', monospace;
+  }
+
+  .btn-primary {
+    @apply btn bg-orange hover:bg-opacity-90 text-white;
+  }
+
+  .btn-secondary {
+    @apply btn bg-transparent border border-teal text-teal hover:bg-teal hover:bg-opacity-10;
+  }
+
+  .btn-glow {
+    @apply relative overflow-hidden;
+  }
+
+  .btn-glow::before {
+    content: '';
+    @apply absolute inset-0 opacity-0 transition-opacity duration-300 rounded-md;
+    box-shadow: 0 0 15px theme('colors.teal');
+  }
+
+  .btn-glow:hover::before {
+    @apply opacity-100;
+  }
+
+  .card {
+    @apply p-6 rounded-lg bg-charcoal bg-opacity-50 border border-dark-teal;
+  }
+
+  .card-glow {
+    @apply relative overflow-hidden;
+    transition: box-shadow 0.3s ease;
+  }
+
+  .card-glow:hover {
+    box-shadow: 0 0 15px theme('colors.teal');
+  }
+  
+  /* Circuit pattern background */
+  .bg-circuit-pattern {
+    background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%2345B5C4' fill-opacity='0.1' fill-rule='evenodd'/%3E%3C/svg%3E");
+    animation: backgroundMove 120s linear infinite;
+  }
+
+  @keyframes backgroundMove {
+    0% { background-position: 0 0; }
+    100% { background-position: 1000px 1000px; }
+  }
+  
+  /* Custom font utility classes */
+  .font-heading {
+    font-family: 'FlynnHollow', sans-serif;
+  }
+  
+  .font-body {
+    font-family: 'Atiba', monospace;
+  }
+  
+  /* Admin dashboard specific styles */
+  .admin-area {
+    font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  }
+  
+  .admin-area h1, 
+  .admin-area h2, 
+  .admin-area h3, 
+  .admin-area h4, 
+  .admin-area h5, 
+  .admin-area h6 {
+    font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  }
+  
+  .admin-area p, 
+  .admin-area span, 
+  .admin-area div, 
+  .admin-area button, 
+  .admin-area input, 
+  .admin-area textarea, 
+  .admin-area select {
+    font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  }
+  
+  /* Light theme for admin dashboard */
+  .admin-area {
+    @apply bg-gray-50;
+  }
+  
+  .admin-header {
+    @apply bg-white border-gray-200 shadow-sm;
+    transition: background-color var(--transition-speed) ease, border-color var(--transition-speed) ease;
+  }
+  
+  .admin-card {
+    @apply bg-white border-gray-200 shadow-sm text-gray-900;
+    transition: all var(--transition-speed) ease;
+  }
+
+  /* Dashboard cards in light mode */
+  .admin-dashboard-card {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    box-shadow: var(--card-shadow);
+    transition: all var(--transition-speed) ease;
+    @apply rounded-lg p-4;
+  }
+  
+  .admin-dashboard-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.05);
+  }
+  
+  /* Dark theme for admin dashboard */
+  .dark .admin-area {
+    @apply bg-gray-900;
+    background-color: var(--primary-bg);
+    color: var(--text-primary);
+    background-image: radial-gradient(circle at 50% 50%, #15151e 0%, #0A0A0A 100%);
+  }
+  
+  .dark .admin-header {
+    @apply bg-gray-800 border-gray-700;
+    background-color: rgba(30, 30, 47, 0.9);
+    border-bottom: 1px solid var(--highlight-secondary);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  }
+  
+  .dark .admin-card {
+    @apply bg-gray-800 border-gray-700 text-white;
+  }
+  
+  /* Enhanced cyberpunk dark mode for admin */
+  .dark .admin-dashboard-card {
+    background-color: var(--card-bg);
+    border: 1px solid rgba(0, 194, 255, 0.3);
+    box-shadow: 0 4px 6px rgba(0, 194, 255, 0.1);
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+  }
+  
+  .dark .admin-dashboard-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, rgba(255, 31, 112, 0.05) 0%, rgba(0, 194, 255, 0.05) 100%);
+    z-index: -1;
+  }
+  
+  .dark .admin-dashboard-card:hover {
+    box-shadow: 0 0 20px rgba(0, 194, 255, 0.3);
+    transform: translateY(-2px);
+    transition: all 0.3s ease;
+  }
+  
+  .dark .admin-dashboard-card:hover::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--highlight-primary), var(--highlight-secondary));
+    animation: glowPulse 1.5s infinite alternate;
+  }
+  
+  @keyframes glowPulse {
+    0% { opacity: 0.6; }
+    100% { opacity: 1; }
+  }
+  
+  /* Dashboard stat cards */
+  .dashboard-stat-card {
+    @apply flex items-center p-4 rounded-lg;
+    transition: all var(--transition-speed) ease;
+  }
+  
+  .dashboard-stat-icon {
+    @apply p-3 rounded-lg mr-4;
+    background-color: #EBF5FF;
+    color: #3B82F6;
+    transition: all var(--transition-speed) ease;
+  }
+  
+  .dashboard-stat-value {
+    @apply text-2xl font-bold;
+    color: var(--text-primary);
+  }
+  
+  .dashboard-stat-label {
+    @apply text-sm;
+    color: var(--text-secondary);
+  }
+  
+  /* Dark mode stat cards */
+  .dark .dashboard-stat-card {
+    @apply bg-gray-800;
+    border: 1px solid rgba(0, 194, 255, 0.2);
+  }
+  
+  .dark .dashboard-stat-icon {
+    background: rgba(0, 194, 255, 0.1);
+    color: var(--highlight-secondary);
+    box-shadow: 0 0 10px rgba(0, 194, 255, 0.2);
+  }
+  
+  .dark .dashboard-stat-value {
+    color: var(--text-primary);
+    text-shadow: 0 0 8px rgba(0, 194, 255, 0.3);
+  }
+  
+  .dark .dashboard-stat-label {
+    color: var(--highlight-secondary);
+  }
+  
+  /* Custom sidebar with background image */
+  .admin-sidebar-background {
+    position: relative;
+    transition: background-color var(--transition-speed) ease;
+  }
+  
+  .admin-sidebar-background::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url('/sidebar.jpg');
+    background-size: cover;
+    background-position: center;
+    opacity: 0.25;
+    z-index: 0;
+    transition: opacity var(--transition-speed) ease;
+  }
+  
+  .dark .admin-sidebar-background {
+    background-color: var(--sidebar-bg);
+    border-right: 1px solid rgba(255, 31, 112, 0.3);
+  }
+  
+  .dark .admin-sidebar-background::before {
+    opacity: 0.15;
+  }
+  
+  .admin-sidebar-content {
+    position: relative;
+    z-index: 1;
+  }
+  
+  /* Neon text effects for headings in dark mode */
+  .dark .admin-area h1 {
+    color: var(--highlight-secondary);
+    text-shadow: 0 0 8px rgba(0, 194, 255, 0.5);
+    position: relative;
+    display: inline-block;
+  }
+  
+  .dark .admin-area h1::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, rgba(0, 194, 255, 0), rgba(0, 194, 255, 0.7), rgba(0, 194, 255, 0));
+  }
+  
+  /* Custom scrollbar for dark mode */
+  .dark .admin-area::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  
+  .dark .admin-area::-webkit-scrollbar-track {
+    background: var(--primary-bg);
+  }
+  
+  .dark .admin-area::-webkit-scrollbar-thumb {
+    background: var(--highlight-primary);
+    border-radius: 4px;
+  }
+  
+  .dark .admin-area::-webkit-scrollbar-thumb:hover {
+    background: var(--highlight-secondary);
+  }
+  
+  /* Highlight active navigation in dark mode */
+  .dark .admin-nav-active {
+    background-color: rgba(255, 31, 112, 0.2) !important;
+    border-left: 3px solid var(--highlight-primary);
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .dark .admin-nav-active::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 4px;
+    background: linear-gradient(to bottom, var(--highlight-primary), var(--highlight-secondary));
+  }
+  
+  /* Token table styling for dark mode */
+  .token-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    @apply rounded-lg overflow-hidden;
+  }
+  
+  .token-table th {
+    @apply px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider;
+    background-color: rgba(243, 244, 246, 0.5);
+    border-bottom: 1px solid var(--border-color);
+    transition: all var(--transition-speed) ease;
+  }
+  
+  .token-table td {
+    @apply px-4 py-3 whitespace-nowrap text-sm;
+    border-bottom: 1px solid var(--border-color);
+    transition: all var(--transition-speed) ease;
+  }
+  
+  .token-table-row {
+    transition: background-color var(--transition-speed) ease;
+  }
+  
+  .token-table-row:hover {
+    background-color: rgba(243, 244, 246, 0.7);
+  }
+  
+  .dark .token-table th {
+    color: var(--highlight-secondary);
+    background-color: rgba(30, 30, 47, 0.7);
+    border-bottom: 1px solid var(--highlight-secondary);
+  }
+  
+  .dark .token-table td {
+    border-bottom: 1px solid rgba(55, 65, 81, 0.5);
+    color: var(--text-primary);
+  }
+  
+  .dark .token-table-row:hover {
+    background-color: rgba(0, 194, 255, 0.08);
+  }
+  
+  /* Network badge styling */
+  .network-badge {
+    @apply inline-flex items-center px-3 py-0.5 rounded-full text-xs font-medium;
+    background-color: #EBF5FF;
+    color: #3B82F6;
+    transition: all var(--transition-speed) ease;
+  }
+  
+  .dark .network-badge {
+    background-color: rgba(102, 51, 153, 0.3);
+    color: #d8b4fe;
+    box-shadow: 0 0 8px rgba(102, 51, 153, 0.2);
+  }
+  
+  /* Button effects */
+  .admin-btn {
+    @apply px-4 py-2 rounded-md font-medium transition-all;
+    background-color: #3B82F6;
+    color: white;
+    box-shadow: var(--btn-shadow);
+    transition: all var(--transition-speed) ease;
+  }
+  
+  .admin-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 6px rgba(59, 130, 246, 0.25);
+  }
+  
+  .dark .admin-btn {
+    background-color: var(--highlight-primary);
+    box-shadow: 0 4px 6px rgba(255, 31, 112, 0.2);
+  }
+  
+  .dark .admin-btn:hover {
+    background-color: rgba(255, 31, 112, 0.9);
+    box-shadow: 0 0 15px rgba(255, 31, 112, 0.4);
+  }
+  
+  .dark .admin-btn-secondary {
+    background-color: transparent;
+    border: 1px solid var(--highlight-secondary);
+    color: var(--highlight-secondary);
+  }
+  
+  .dark .admin-btn-secondary:hover {
+    background-color: rgba(0, 194, 255, 0.1);
+    box-shadow: 0 0 15px rgba(0, 194, 255, 0.3);
+  }
+  
+  /* Address display */
+  .address-display {
+    @apply font-mono text-sm flex items-center;
+    transition: all var(--transition-speed) ease;
+  }
+  
+  .dark .address-display {
+    color: #a5f3fc;
+    text-shadow: 0 0 5px rgba(165, 243, 252, 0.3);
+  }
+  
+  .address-link-icon {
+    @apply ml-1 h-4 w-4;
+    transition: all var(--transition-speed) ease;
+  }
+  
+  .dark .address-link-icon {
+    color: var(--highlight-secondary);
+  }
+  
+  .dark .address-link-icon:hover {
+    color: white;
+    transform: scale(1.1);
+  }
+}
+
+/* Custom animations will be added to animations.css */

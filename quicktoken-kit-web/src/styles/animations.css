@@ -1,0 +1,224 @@
+/* Pulse Glow */
+@keyframes pulseGlow {
+  0% {
+    opacity: 0.5;
+    filter: blur(5px);
+  }
+  50% {
+    opacity: 1;
+    filter: blur(10px);
+  }
+  100% {
+    opacity: 0.5;
+    filter: blur(5px);
+  }
+}
+
+/* Digital Flicker */
+@keyframes digitalFlicker {
+  0% {
+    opacity: 1;
+  }
+  2% {
+    opacity: 0.8;
+  }
+  4% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 1;
+  }
+  52% {
+    opacity: 0.9;
+  }
+  54% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+/* Border Trace */
+@keyframes borderTrace {
+  0% {
+    background-position: 0% 0%;
+  }
+  100% {
+    background-position: 100% 100%;
+  }
+}
+
+/* Neon Pulse */
+@keyframes neonPulse {
+  0% {
+    box-shadow: 0 0 5px var(--pulse-color, #45B5C4), 0 0 10px color-mix(in srgb, var(--pulse-color, #45B5C4) 20%, transparent);
+  }
+  50% {
+    box-shadow: 0 0 10px var(--pulse-color, #45B5C4), 0 0 20px color-mix(in srgb, var(--pulse-color, #45B5C4) 40%, transparent);
+  }
+  100% {
+    box-shadow: 0 0 5px var(--pulse-color, #45B5C4), 0 0 10px color-mix(in srgb, var(--pulse-color, #45B5C4) 20%, transparent);
+  }
+}
+
+/* Floating particles animation */
+@keyframes float {
+  0% {
+    transform: translateY(0) translateX(0);
+  }
+  50% {
+    transform: translateY(-20px) translateX(10px);
+  }
+  100% {
+    transform: translateY(0) translateX(0);
+  }
+}
+
+/* Fade in animation */
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+/* Slide up animation */
+@keyframes slideUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Utility classes to apply animations */
+.animate-pulse-glow {
+  animation: pulseGlow 3s infinite;
+}
+
+.animate-digital-flicker {
+  animation: digitalFlicker 4s infinite;
+}
+
+.animate-border-trace {
+  background: linear-gradient(45deg, transparent 95%, #45B5C4 95%);
+  background-size: 400% 400%;
+  animation: borderTrace 4s linear infinite;
+}
+
+.animate-neon-pulse {
+  animation: neonPulse 2s infinite;
+}
+
+.animate-fade-in {
+  animation: fadeIn 1s ease-out forwards;
+}
+
+.animate-fade-in-delayed {
+  opacity: 0;
+  animation: fadeIn 1s ease-out 0.8s forwards;
+}
+
+.animate-slide-up {
+  opacity: 0;
+  animation: slideUp 0.6s ease-out 0.2s forwards;
+}
+
+.animate-slide-up-delayed {
+  opacity: 0;
+  animation: slideUp 0.6s ease-out 0.4s forwards;
+}
+
+.animate-slide-up-delayed-2 {
+  opacity: 0;
+  animation: slideUp 0.6s ease-out 0.6s forwards;
+}
+
+.animate-slide-up-delayed-3 {
+  opacity: 0;
+  animation: slideUp 0.6s ease-out 0.8s forwards;
+}
+
+/* Particle styling */
+.particle {
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.particle-1 {
+  width: 8px;
+  height: 8px;
+  background-color: #45B5C4;
+  top: 15%;
+  left: 10%;
+  filter: blur(2px);
+  animation: float 6s ease-in-out infinite;
+}
+
+.particle-2 {
+  width: 12px;
+  height: 12px;
+  background-color: #F26430;
+  top: 25%;
+  left: 60%;
+  filter: blur(2px);
+  animation: float 9s ease-in-out infinite;
+}
+
+.particle-3 {
+  width: 6px;
+  height: 6px;
+  background-color: #F9B900;
+  top: 60%;
+  left: 75%;
+  filter: blur(2px);
+  animation: float 7s ease-in-out infinite;
+}
+
+.particle-4 {
+  width: 10px;
+  height: 10px;
+  background-color: #7D1D3F;
+  top: 75%;
+  left: 25%;
+  filter: blur(2px);
+  animation: float 8s ease-in-out infinite;
+}
+
+.particle-5 {
+  width: 14px;
+  height: 14px;
+  background-color: #45B5C4;
+  top: 40%;
+  left: 85%;
+  filter: blur(3px);
+  animation: float 10s ease-in-out infinite;
+}
+
+/* Magenta variations */
+.animate-neon-pulse-magenta {
+  animation-name: neonPulse;
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
+  --pulse-color: #E052A0;
+}
+
+@keyframes neonPulse {
+  0% {
+    box-shadow: 0 0 5px var(--pulse-color, #58C9D4), 0 0 10px color-mix(in srgb, var(--pulse-color, #58C9D4) 20%, transparent);
+  }
+  50% {
+    box-shadow: 0 0 10px var(--pulse-color, #58C9D4), 0 0 20px color-mix(in srgb, var(--pulse-color, #58C9D4) 40%, transparent);
+  }
+  100% {
+    box-shadow: 0 0 5px var(--pulse-color, #58C9D4), 0 0 10px color-mix(in srgb, var(--pulse-color, #58C9D4) 20%, transparent);
+  }
+}

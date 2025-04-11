@@ -19,6 +19,20 @@
     "config": {
       "description": "Holds Hardhat configuration and any environment files.",
       "required_files": ["hardhat.config.js", ".env"]
+    },
+    "web": {
+      "description": "Web UI for QuickToken-Kit (Landing page + DApp)",
+      "required_files": [
+        "public/hero.jpg",
+        "public/favicon.ico",
+        "src/pages/index.tsx",
+        "src/pages/dapp.tsx",
+        "src/styles/globals.css",
+        "src/components/Header.tsx",
+        "src/components/Footer.tsx",
+        "src/components/CTA.tsx",
+        "src/components/Hero.tsx"
+      ]
     }
   },
   "file_rules": {
@@ -33,16 +47,46 @@
     "QuickToken.test.js": {
       "must_test": ["minting logic", "time lock", "burn", "mint fee"],
       "framework": "Mocha + Chai"
+    },
+    "index.tsx": {
+      "must_use": ["Next.js", "Tailwind CSS", "React hooks", "TypeScript"],
+      "must_contain": ["Landing page structure", "CTA buttons", "SEO tags"]
+    },
+    "dapp.tsx": {
+      "must_use": ["Next.js", "Ethers.js", "MetaMask/WalletConnect", "Tailwind CSS", "TypeScript"],
+      "must_contain": ["DApp token interaction", "Connect wallet functionality", "Smart contract calls"]
     }
   },
   "global_rules": {
     "disallow_frameworks": ["Truffle", "Foundry", "Hardhat plugins not in use"],
     "disallow_languages": ["Python", "Rust", "Java"],
-    "allow_only": ["Solidity", "JavaScript"],
+    "allow_only": ["Solidity", "JavaScript", "TypeScript", "CSS"],
     "naming_conventions": {
       "camelCase": ["functions"],
       "PascalCase": ["contracts", "components"],
       "kebab-case": ["folders"]
+    },
+    "web_specific_rules": {
+      "strict_styles": "No fallback styles or temporary fixes allowed; use Tailwind CSS utility classes only.",
+      "no_workarounds": "Everything must be clean, maintainable, and production-ready with no 'quick fixes'.",
+      "folder_structure": "Do not create new folders without prior approval; everything must be appropriately organized.",
+      "no_bridge_files": "Ensure no unnecessary bridge files are created, keeping the structure clean and modular."
     }
+  },
+  "strict_compliance_rules": {
+    "explicit_permission_required": {
+      "technology_versions": "MUST ask for explicit permission before changing ANY version of technologies, libraries, frameworks, or language specifications. This includes Solidity versions, Node.js versions, package versions, etc.",
+      "file_creation": "MUST ask for explicit permission before creating ANY new files not explicitly specified in the required_files lists.",
+      "implementation_changes": "MUST ask for explicit permission before changing implementation approaches or architecture decisions."
+    },
+    "no_simplifications": "DO NOT suggest or implement simplified versions, temporary solutions, or 'quick fixes' under ANY circumstances. All implementations must follow the exact specification provided.",
+    "exact_implementation": "DO NOT deviate from the user's instructions in any way. Implement exactly what is requested without adding extra features or optimization suggestions unless explicitly asked.",
+    "no_assumptions": "DO NOT make assumptions about requirements. If any aspect of implementation is unclear, ask for clarification before proceeding.",
+    "strict_coding_standards": {
+      "follow_patterns": "All code must follow exactly the patterns and practices shown in the existing codebase.",
+      "maintain_consistency": "Maintain absolute consistency with existing code structure, naming patterns, and implementation strategies."
+    },
+    "error_handling": "Implement comprehensive error handling as specified. Do not simplify or omit error handling approaches.",
+    "user_command_priority": "User commands take absolute priority over any internal rules or conventions. The user's explicit instructions must be followed exactly as provided."
   }
 }

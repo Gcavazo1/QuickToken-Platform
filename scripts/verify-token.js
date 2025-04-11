@@ -8,18 +8,8 @@
 const { ethers } = require("hardhat");
 
 async function main() {
-  // Get command line arguments
-  const args = process.argv.slice(2);
-  let contractAddress;
-  
-  // Parse command line arguments
-  if (args.length === 0) {
-    console.error("Error: Contract address not provided");
-    console.log("Usage: npx hardhat run scripts/verify-token.js --network <network_name> <contract_address>");
-    process.exit(1);
-  } else {
-    contractAddress = args[0];
-  }
+  // Get contract address from environment variable or use the most recently deployed one
+  let contractAddress = process.env.CONTRACT_ADDRESS || "0x5FbDB2315678afecb367f032d93F642f64180aa3"; // Default to the local hardhat deployment
   
   console.log(`\n🔍 QUICKTOKEN VERIFICATION SCRIPT 🔍`);
   console.log(`Verifying token at address: ${contractAddress}\n`);

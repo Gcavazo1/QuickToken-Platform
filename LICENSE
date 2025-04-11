@@ -1,6 +1,6 @@
-QUICKTOKEN KIT PROPRIETARY LICENSE
+QUICKTOKEN PLATFORM PROPRIETARY LICENSE
 
-Copyright (c) 2023 GigaCode (Gabriel Cavazos)
+Copyright (c) 2023-2024 GigaCode (Gabriel Cavazos)
 
 All rights reserved.
 
@@ -10,24 +10,26 @@ This is a proprietary software license agreement ("License") between you (either
 
 2. SCOPE OF LICENSE
 
-Upon your purchase of QuickToken Kit, you are granted a non-exclusive, non-transferable license to:
+Upon your purchase of QuickToken Platform, you are granted a non-exclusive, non-transferable license to:
 
    a) Use the software to create and deploy your own token smart contracts.
    b) Modify the code for your own personal or commercial projects.
    c) Deploy tokens created with this software on any compatible blockchain network.
+   d) Use the web application for token management and administration.
 
 3. RESTRICTIONS
 
 You may NOT:
 
-   a) Redistribute, resell, lease, license, sub-license or otherwise make the QuickToken Kit available to any third party.
+   a) Redistribute, resell, lease, license, sub-license or otherwise make the QuickToken Platform (including both smart contracts and web application) available to any third party.
    b) Remove or alter any proprietary notices or labels on the software.
-   c) Use the QuickToken Kit to create competing products for sale.
-   d) Claim that you created or own the original QuickToken Kit software.
+   c) Use the QuickToken Platform to create competing products for sale.
+   d) Claim that you created or own the original QuickToken Platform software.
+   e) Use the web application code for any purpose other than interacting with QuickToken smart contracts.
 
 4. OWNERSHIP
 
-The QuickToken Kit is owned and copyrighted by the copyright holder. Your license confers no title or ownership in the software and is not a sale of any rights in the QuickToken Kit.
+The QuickToken Platform (including smart contracts and web application) is owned and copyrighted by the copyright holder. Your license confers no title or ownership in the software and is not a sale of any rights in the QuickToken Platform.
 
 5. TERMINATION
 
@@ -51,5 +53,5 @@ This License will be governed by the laws of the jurisdiction in which the copyr
 
 For questions about this license or to obtain additional licenses, please contact:
 Gabriel Cavazos | GigaCode
-Email: contact@gigacode.dev
+Email: gcavazo1@gmail.com
 Website: https://github.com/Gcavazo1 
