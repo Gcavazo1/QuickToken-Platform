@@ -18,9 +18,9 @@ function IconWrapper({ icon: Icon, color }: { icon: IconType; color: GlowColor }
   const getGradient = () => {
     switch(color) {
       case 'teal': return 'from-teal-500 to-teal-700';
-      case 'orange': return 'from-orange-500 to-orange-700';
-      case 'gold': return 'from-amber-400 to-amber-600';
-      case 'maroon': return 'from-rose-600 to-rose-800';
+      case 'cyan': return 'from-cyan-500 to-cyan-700';
+      case 'magenta': return 'from-pink-500 to-pink-700';
+      case 'green': return 'from-green-500 to-green-700';
       default: return 'from-teal-500 to-teal-700';
     }
   };
@@ -31,8 +31,8 @@ function IconWrapper({ icon: Icon, color }: { icon: IconType; color: GlowColor }
         style={{ 
           boxShadow: `0 0 15px var(--feature-color)`,
           '--feature-color': color === 'teal' ? '#45B5C4' : 
-                            color === 'orange' ? '#F26430' : 
-                            color === 'gold' ? '#F9B900' : '#7D1D3F'
+                            color === 'cyan' ? '#22D3EE' : 
+                            color === 'magenta' ? '#EC4899' : '#22C55E'
         } as React.CSSProperties}></div>
       <Icon className="h-8 w-8 text-white relative z-10" aria-hidden="true" />
     </div>
@@ -55,9 +55,9 @@ function FeatureCard({ title, description, icon, glowColor, index }: FeatureCard
   const getTitleColor = () => {
     switch(glowColor) {
       case 'teal': return 'text-teal';
-      case 'orange': return 'text-orange';
-      case 'gold': return 'text-gold';
-      case 'maroon': return 'text-maroon';
+      case 'cyan': return 'text-cyan';
+      case 'magenta': return 'text-pink';
+      case 'green': return 'text-green';
       default: return 'text-teal';
     }
   };
