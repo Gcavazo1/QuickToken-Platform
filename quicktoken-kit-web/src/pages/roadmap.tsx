@@ -1,9 +1,9 @@
-import Head from 'next/head';
 import { useState, useEffect } from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { CheckCircleIcon, ClockIcon } from '@heroicons/react/24/outline';
 import { useTheme } from 'next-themes';
+import SEO from '../components/SEO';
 
 export default function Roadmap() {
   const { theme } = useTheme();
@@ -13,6 +13,26 @@ export default function Roadmap() {
   useEffect(() => {
     setMounted(true);
   }, []);
+
+  // Create structured data for the roadmap page
+  const roadmapSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    'itemListElement': [
+      {
+        '@type': 'ListItem',
+        'position': 1,
+        'name': 'Home',
+        'item': process.env.NEXT_PUBLIC_APP_URL || 'https://quick-token-platform.vercel.app'
+      },
+      {
+        '@type': 'ListItem',
+        'position': 2,
+        'name': 'Roadmap',
+        'item': `${process.env.NEXT_PUBLIC_APP_URL || 'https://quick-token-platform.vercel.app'}/roadmap`
+      }
+    ]
+  };
 
   const roadmapItems = [
     {
@@ -66,16 +86,13 @@ export default function Roadmap() {
 
   return (
     <>
-      <Head>
-        <title>QuickToken | Platform Roadmap</title>
-        <meta name="description" content="QuickToken platform roadmap and development timeline - from beta to full production launch" />
-        <meta property="og:title" content="QuickToken Platform Roadmap" />
-        <meta property="og:description" content="View our development timeline and upcoming features for the QuickToken platform." />
-        <meta property="og:type" content="website" />
-        <meta property="twitter:card" content="summary_large_image" />
-        <meta property="twitter:title" content="QuickToken Platform Roadmap" />
-        <meta property="twitter:description" content="Track our progress from beta to full production with our interactive roadmap." />
-      </Head>
+      <SEO
+        title="Platform Roadmap | QuickToken"
+        description="Track our development timeline from beta to full production release. View upcoming features, release dates, and milestones for the QuickToken platform."
+        ogType="website" 
+        jsonLd={roadmapSchema}
+        ogImage={`${process.env.NEXT_PUBLIC_APP_URL || 'https://quick-token-platform.vercel.app'}/roadmap-cover.jpg`}
+      />
 
       <Header />
 

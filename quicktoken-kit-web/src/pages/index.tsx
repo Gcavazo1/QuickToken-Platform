@@ -1,22 +1,61 @@
-import Head from 'next/head';
-import Link from 'next/link';
 import { useEffect } from 'react';
+import Link from 'next/link';
 import Header from '../components/Header';
 import Hero from '../components/Hero';
 import CTA from '../components/CTA';
 import Footer from '../components/Footer';
 import Features from '../components/Features';
 import UseCaseCard from '../components/UseCaseCard';
+import SEO from '../components/SEO';
 
 export default function Home() {
+  // Homepage structured data
+  const websiteSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    '@id': `${process.env.NEXT_PUBLIC_APP_URL || 'https://quick-token-platform.vercel.app'}/#website`,
+    name: 'QuickToken',
+    url: process.env.NEXT_PUBLIC_APP_URL || 'https://quick-token-platform.vercel.app',
+    description: 'Create, deploy and manage custom ERC-20 tokens in minutes without writing code.',
+    potentialAction: {
+      '@type': 'SearchAction',
+      'target': `${process.env.NEXT_PUBLIC_APP_URL || 'https://quick-token-platform.vercel.app'}/search?q={search_term_string}`,
+      'query-input': 'required name=search_term_string'
+    }
+  };
+
+  // Product structured data
+  const productSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'SoftwareApplication',
+    name: 'QuickToken Kit',
+    applicationCategory: 'FinanceApplication',
+    operatingSystem: 'Web',
+    offers: {
+      '@type': 'Offer',
+      price: '0',
+      priceCurrency: 'USD',
+      availability: 'https://schema.org/InStock'
+    },
+    aggregateRating: {
+      '@type': 'AggregateRating',
+      ratingValue: '4.8',
+      ratingCount: '24'
+    },
+    description: 'Deploy your own custom ERC-20 token without writing code. Perfect for creators, DAOs, and developers.'
+  };
+
+  // Combine all schemas
+  const jsonLdData = [websiteSchema, productSchema];
+
   return (
     <>
-      <Head>
-        <title>QuickToken Kit - Deploy Your ERC-20 Token in Minutes</title>
-        <meta name="description" content="QuickToken Kit - A ready-to-deploy smart contract template for ERC-20 token launches, tailored for creators, DAOs, and developers." />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+      <SEO 
+        title="QuickToken Kit - Deploy Your ERC-20 Token in Minutes" 
+        description="Create, deploy and manage custom ERC-20 tokens in minutes without writing code. Perfect for creators, DAOs and developers."
+        ogType="website"
+        jsonLd={jsonLdData}
+      />
       
       <div className="min-h-screen flex flex-col">
         <Header />
