@@ -134,7 +134,7 @@ export default function Pricing() {
                 {/* Standard Plan */}
                 <div className="relative bg-charcoal/50 border border-gold/30 rounded-xl overflow-hidden">
                   <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-gold to-orange"></div>
-                  <AnimatedGlow color="gold" opacity={0.1} />
+                  <AnimatedGlow color="teal" opacity={0.1} />
                   
                   <div className="p-8 relative z-10">
                     <h3 className="text-gold text-xl font-bold mb-2">Standard Plan</h3>

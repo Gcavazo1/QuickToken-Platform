@@ -39,7 +39,7 @@ function IconWrapper({ icon: Icon, color }: { icon: IconType; color: GlowColor }
   );
 }
 
-type GlowColor = 'teal' | 'gold' | 'maroon' | 'orange';
+type GlowColor = 'magenta' | 'cyan' | 'teal' | 'green';
 
 interface FeatureCardProps {
   title: string;
@@ -116,19 +116,19 @@ export default function Features() {
       title: "Configurable Supply",
       description: "Set your token's total supply and distribution parameters to match your specific needs.",
       icon: CubeIcon,
-      glowColor: 'orange'
+      glowColor: 'cyan'
     },
     {
       title: "Time-Locked Transfers",
       description: "Protect your token with configurable time-locks that prevent transfers until a specified date.",
       icon: LockClosedIcon,
-      glowColor: 'gold'
+      glowColor: 'magenta'
     },
     {
       title: "Mint Fee Options",
       description: "Configure optional mint fees to generate revenue each time new tokens are created.",
       icon: CurrencyDollarIcon,
-      glowColor: 'maroon'
+      glowColor: 'green'
     },
     {
       title: "Owner Controls",
@@ -140,7 +140,7 @@ export default function Features() {
       title: "Security Audited",
       description: "Built on OpenZeppelin's battle-tested contracts for maximum security and stability.",
       icon: ShieldCheckIcon,
-      glowColor: 'gold'
+      glowColor: 'cyan'
     }
   ];
 

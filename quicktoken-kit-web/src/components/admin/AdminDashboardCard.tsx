@@ -7,7 +7,7 @@ interface AdminDashboardCardProps {
   description: string;
   icon: React.ReactNode;
   link: string;
-  color?: 'teal' | 'orange' | 'gold' | 'maroon';
+  color?: 'magenta' | 'cyan' | 'teal' | 'green';
 }
 
 export default function AdminDashboardCard({
@@ -30,7 +30,7 @@ export default function AdminDashboardCard({
               {title}
             </h3>
             
-            <p className="text-gray-400 text-sm">
+            <p className="text-gray-300 text-sm">
               {description}
             </p>
           </div>
