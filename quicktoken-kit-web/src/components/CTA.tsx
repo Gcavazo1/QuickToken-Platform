@@ -30,7 +30,7 @@ export default function CTA({
       <div className="absolute -bottom-20 right-1/3 w-60 h-60 rounded-full bg-teal opacity-10 blur-3xl"></div>
       
       <div className="container relative z-10 mx-auto px-4 text-center">
-        <AnimatedGlow color="orange" intensity="low" className="inline-block mb-8">
+        <AnimatedGlow color="teal" intensity="low" className="inline-block mb-8">
           <div className="h-1 w-16 bg-orange mx-auto rounded-full"></div>
         </AnimatedGlow>
         
